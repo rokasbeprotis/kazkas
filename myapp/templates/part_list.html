@@ -187,7 +187,7 @@
                     <p>Name: {{ pipe.name }} - Inner Diameter: {{ pipe.inner_diameter|default:"N/A" }} mm - Outer Diameter: {{ pipe.outer_diameter|default:"N/A" }} mm - Material: {{ pipe.material|default:"N/A" }}</p>
                     <div class="pipe-details">
                         <p>Velocity: {{ pipe.velocity_suction|floatformat:2 }} m/s</p>
-                        <p>Pressure Drop: {{ pipe.pressure_drop_suction|floatformat:2 }} bar</p>
+                        <p>Pressure Drop: {{ pipe.pressure_drop_suction/100000|floatformat:2 }} bar</p>
                     </div>
                 </div>
             {% endfor %}
@@ -207,7 +207,7 @@
                     <p>Name: {{ pipe.name }} - Inner Diameter: {{ pipe.inner_diameter|default:"N/A" }} mm - Outer Diameter: {{ pipe.outer_diameter|default:"N/A" }} mm - Material: {{ pipe.material|default:"N/A" }}</p>
                     <div class="pipe-details">
                         <p>Velocity: {{ pipe.velocity_discharge|floatformat:2 }} m/s</p>
-                        <p>Pressure Drop: {{ pipe.pressure_drop_discharge|floatformat:2 }} bar</p>
+                        <p>Pressure Drop: {{ pipe.pressure_drop_discharge/100000|floatformat:2 }} bar</p>
                     </div>
                 </div>
             {% endfor %}
