@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chiller/Heat Pump Input</title>
+</head>
+<body>
+    <h1>Chiller/Heat Pump Input</h1>
+    <form action="{% url 'part_list' %}" method="get">
+        {% csrf_token %}
+        <fieldset>
+            <legend>Main Parameters</legend>
+            <label for="q_capacity">Q-cooling capacity (kW):</label>
+            <input type="number" id="q_capacity" name="q_capacity" required><br>
+
+            <label for="tevap">Tevap - Temperature of evaporation (°C):</label>
+            <input type="number" id="tevap" name="tevap" required><br>
+
+            <label for="tcond">Tcond - Temperature of condensation (°C):</label>
+            <input type="number" id="tcond" name="tcond" required><br>
+
+            <label for="refrigerant">Refrigerant:</label>
+            <select id="refrigerant" name="refrigerant" required>
+                <option value="R134a">R134a</option>
+                <option value="R22">R22</option>
+                <option value="R410A">R410A</option>
+                <option value="R32">R32</option>
+                <option value="R404A">R404A</option>
+                <option value="R407C">R407C</option>
+                <option value="R600a">R600a</option>
+                <option value="R290">R290 (Propane)</option>
+                <option value="R1234yf">R1234yf</option>
+                <option value="R1234ze">R1234ze</option>
+                <option value="R717">R717 (Ammonia)</option>
+                <option value="R1150">R1150 (Ethylene)</option>
+                <option value="R143a">R143a</option>
+                <option value="R152a">R152a</option>
+                <option value="R125">R125</option>
+                <option value="R1336mzz">R1336mzz</option>
+                <option value="R507A">R507A</option>
+                <option value="R508A">R508A</option>
+                <!-- Add more refrigerants as needed -->
+            </select><br>
+        </fieldset>
+
+        <fieldset>
+            <legend>Side Parameters</legend>
+            <label for="subcooling">Subcooling (K):</label>
+            <input type="number" id="subcooling" name="subcooling"><br>
+
+            <label for="superheat">Superheat (K):</label>
+            <input type="number" id="superheat" name="superheat"><br>
+        </fieldset>
+
+        <fieldset>
+            <legend>Circuits and Compressors</legend>
+            <label for="circuits">Number of Circuits:</label>
+            <input type="number" id="circuits" name="circuits" required><br>
+
+            <label for="compressors">Number of Compressors in Parallel:</label>
+            <input type="number" id="compressors" name="compressors" required><br>
+
+            <label for="frequency">Frequency of Compressors (Hz):</label>
+            <input type="number" id="frequency" name="frequency" required><br>
+        </fieldset>
+
+        <fieldset>
+            <legend>Lines and Components</legend>
+            <div id="lines">
+                <label for="line_type">Choose Line Type:</label>
+                <select id="line_type" name="line_type">
+                    <option value="suction">Suction</option>
+                    <option value="discharge">Discharge</option>
+                    <option value="liquid">Liquid</option>
+                    <option value="oil_return">Oil Return</option>
+                </select><br>
+
+                <label for="component_type">Choose Component Type:</label>
+                <select id="component_type" name="component_type">
+                    <option value="compressor">Compressor</option>
+                    <option value="check_valve">Check Valve</option>
+                    <option value="expansion_valve">Expansion Valve</option>
+                    <option value="solenoid_valve">Solenoid Valve</option>
+                    <option value="receiver">Receiver</option>
+                    <!-- Add other component types here -->
+                </select><br>
+
+                <label for="parallel_count">Parallel Count:</label>
+                <input type="number" id="parallel_count" name="parallel_count" value="1" min="1"><br>
+
+                <button type="button" onclick="addComponent()">Add Component</button>
+            </div>
+        </fieldset>
+
+        <input type="submit" value="Submit">
+    </form>
+
+    <h2>Added Components</h2>
+    <ul id="added_components">
+        <!-- Added components will be listed here -->
+    </ul>
+
+    <script>
+        function addComponent() {
+            var lineType = document.getElementById('line_type').value;
+            var componentType = document.getElementById('component_type').value;
+            var parallelCount = document.getElementById('parallel_count').value;
+
+            if (lineType && componentType) {
+                var addedComponentsList = document.getElementById('added_components');
+                var newComponent = document.createElement('li');
+                newComponent.textContent = `${lineType}: ${componentType} (Parallel Count: ${parallelCount})`;
+                addedComponentsList.appendChild(newComponent);
+            } else {
+                alert('Please select both line type and component type.');
+            }
+        }
+    </script>
+</body>
+</html>

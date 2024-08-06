@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Part List</title>
+    <style>
+        .component-list {
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        .highlight {
+            background-color: #e0ffe0;
+        }
+        .tick-mark {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ddd;
+            border-radius: 50%;
+            color: #ddd;
+            font-size: 14px;
+            line-height: 18px;
+            text-align: center;
+            cursor: pointer;
+        }
+        .highlight .tick-mark {
+            border-color: #28a745;
+            color: #28a745;
+            background-color: white;
+        }
+        .component {
+            position: relative;
+            padding-left: 30px;
+        }
+        .tick-mark-container {
+            position: absolute;
+            left: 5px;
+            top: 10px;
+        }
+        .pipe-details {
+            margin-top: 10px;
+        }
+        .pipe-details p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Part List</h1>
+
+    <h2>Check Valves</h2>
+    <div class="component-list">
+        {% for valve in check_valve %}
+            <div class="component {% if valve.id == selected_valve_id %}highlight{% endif %}">
+                <div class="tick-mark-container" onclick="selectComponent('CheckValve', '{{ valve.id }}')">
+                    <div class="tick-mark">&#10003;</div>
+                </div>
+                <p>{{ valve.model }} ({{ valve.manufacturer }})</p>
+            </div>
+        {% empty %}
+            <p>No check valves found.</p>
+        {% endfor %}
+    </div>
+
+    <h2>Compressors</h2>
+    <div class="component-list">
+        {% for compressor in compressors %}
+            <div class="component {% if compressor.id == selected_compressor.id %}highlight{% endif %}">
+                <div class="tick-mark-container" onclick="selectComponent('compressor', '{{ compressor.id }}')">
+                    <div class="tick-mark">&#10003;</div>
+                </div>
+                <p>{{ compressor.name }} - Q Capacity: {{ compressor.q_compressor }}</p>
+            </div>
+        {% endfor %}
+    </div>
+
+    <h2>Expansion Valves</h2>
+    <div class="component-list">
+        {% for valve in expansion_valves %}
+            <div class="component {% if valve.id == selected_valve_id %}highlight{% endif %}">
+                <div class="tick-mark-container" onclick="selectComponent('ExpansionValve', '{{ valve.id }}')">
+                    <div class="tick-mark">&#10003;</div>
+                </div>
+                <p>{{ valve.model }} ({{ valve.manufacturer }})</p>
+            </div>
+        {% empty %}
+            <p>No expansion valves found.</p>
+        {% endfor %}
+    </div>
+
+    <h2>Solenoid Valves</h2>
+    <div class="component-list">
+        {% for valve in solenoid_valves %}
+            <div class="component {% if valve.id == selected_valve_id %}highlight{% endif %}">
+                <div class="tick-mark-container" onclick="selectComponent('SolenoidValve', '{{ valve.id }}')">
+                    <div class="tick-mark">&#10003;</div>
+                </div>
+                <p>{{ valve.model }} ({{ valve.manufacturer }})</p>
+            </div>
+        {% empty %}
+            <p>No solenoid valves found.</p>
+        {% endfor %}
+    </div>
+
+    <h2>Oil Receivers</h2>
+    <div class="component-list">
+        {% for oil_receiver in oil_receivers %}
+            <div class="component {% if oil_receiver.id == selected_oil_receiver_id %}highlight{% endif %}">
+                <div class="tick-mark-container" onclick="selectComponent('OilReceiver', '{{ oil_receiver.id }}')">
+                    <div class="tick-mark">&#10003;</div>
+                </div>
+                <p>{{ oil_receiver.oil_receiver_model }} ({{ oil_receiver.manufacturer }})</p>
+            </div>
+        {% empty %}
+            <p>No oil receivers found.</p>
+        {% endfor %}
+    </div>
+
+    <h2>Oil Separators</h2>
+    <div class="component-list">
+        {% for oil_separator in oil_separators %}
+            <div class="component {% if oil_separator.id == selected_oil_separator_id %}highlight{% endif %}">
+                <div class="tick-mark-container" onclick="selectComponent('OilSeparator', '{{ oil_separator.id }}')">
+                    <div class="tick-mark">&#10003;</div>
+                </div>
+                <p>{{ oil_separator.oil_separator_model }} ({{ oil_separator.manufacturer }})</p>
+            </div>
+        {% empty %}
+            <p>No oil separators found.</p>
+        {% endfor %}
+    </div>
+
+    <h2>Oil Separators and Receivers</h2>
+    <div class="component-list">
+        {% for item in oil_separators_receivers %}
+            <div class="component {% if item.id == selected_item_id %}highlight{% endif %}">
+                <div class="tick-mark-container" onclick="selectComponent('{{ item.type }}', '{{ item.id }}')">
+                    <div class="tick-mark">&#10003;</div>
+                </div>
+                <p>{{ item.model }} ({{ item.manufacturer }})</p>
+            </div>
+        {% empty %}
+            <p>No oil separators or receivers found.</p>
+        {% endfor %}
+    </div>
+
+    <h2>Receivers</h2>
+    <div class="component-list">
+        {% for receiver in receiver %}
+            <div class="component {% if receiver.id == selected_receiver_id %}highlight{% endif %}">
+                <div class="tick-mark-container" onclick="selectComponent('Receiver', '{{ receiver.id }}')">
+                    <div class="tick-mark">&#10003;</div>
+                </div>
+                <p>{{ receiver.model }} ({{ receiver.manufacturer }})</p>
+            </div>
+        {% empty %}
+            <p>No receivers found.</p>
+        {% endfor %}
+    </div>
+
+    <h2>Suction Accumulators</h2>
+    <div class="component-list">
+        {% for suction_accumulator in suction_accumulators %}
+            <div class="component {% if suction_accumulator.id == selected_suction_accumulator_id %}highlight{% endif %}">
+                <div class="tick-mark-container" onclick="selectComponent('SuctionAccumulator', '{{ suction_accumulator.id }}')">
+                    <div class="tick-mark">&#10003;</div>
+                </div>
+                <p>{{ suction_accumulator.model }} ({{ suction_accumulator.manufacturer }})</p>
+            </div>
+        {% empty %}
+            <p>No suction accumulators found.</p>
+        {% endfor %}
+    </div>
+
+    <h2>Best Pipes</h2>
+    <div class="component-list">
+        <h3>Suction Pipe</h3>
+        {% if suction_pipes_list %}
+            {% for pipe in suction_pipes_list %}
+                <div class="component {% if pipe.name == suction_pipe.name %}highlight{% endif %}">
+                    <div class="tick-mark-container" onclick="selectComponent('suction_pipe', '{{ pipe.id }}')">
+                        <div class="tick-mark">&#10003;</div>
+                    </div>
+                    <p>Name: {{ pipe.name }} - Inner Diameter: {{ pipe.inner_diameter|default:"N/A" }} mm - Outer Diameter: {{ pipe.outer_diameter|default:"N/A" }} mm - Material: {{ pipe.material|default:"N/A" }}</p>
+                    <div class="pipe-details">
+                        <p>Velocity: {{ pipe.velocity_suction|floatformat:2 }} m/s</p>
+                        <p>Pressure Drop: {{ pipe.pressure_drop_suction|floatformat:2 }} bar</p>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No suction pipes available.</p>
+        {% endif %}
+    </div>
+
+    <div class="component-list">
+        <h3>Discharge Pipe</h3>
+        {% if discharge_pipes_list %}
+            {% for pipe in discharge_pipes_list %}
+                <div class="component {% if pipe.name == discharge_pipe.name %}highlight{% endif %}">
+                    <div class="tick-mark-container" onclick="selectComponent('discharge_pipe', '{{ pipe.id }}')">
+                        <div class="tick-mark">&#10003;</div>
+                    </div>
+                    <p>Name: {{ pipe.name }} - Inner Diameter: {{ pipe.inner_diameter|default:"N/A" }} mm - Outer Diameter: {{ pipe.outer_diameter|default:"N/A" }} mm - Material: {{ pipe.material|default:"N/A" }}</p>
+                    <div class="pipe-details">
+                        <p>Velocity: {{ pipe.velocity_discharge|floatformat:2 }} m/s</p>
+                        <p>Pressure Drop: {{ pipe.pressure_drop_discharge|floatformat:2 }} bar</p>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No discharge pipes available.</p>
+        {% endif %}
+    </div>
+
+    <button onclick="window.location.href='{% url 'input' %}'">Back to Input Page</button>
+
+    <script>
+        function selectComponent(type, id) {
+            fetch('/select_component/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({ type: type, id: id })
+            }).then(response => response.json())
+              .then(data => {
+                  if (data.success) {
+                      location.reload();
+                  } else {
+                      alert('Error selecting component');
+                  }
+              });
+        }
+    </script>
+</body>
+</html>
